@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "5000:5000"
+    depends_on:
+      - api
+    networks:
+      - app-net
+    volumes:
+      - web_data:/app/data  # web 서비스의 /app/data 디렉토리와 web_data 볼륨 연결
+
+  api:
+    build: ./api
+    ports:
+      - "5001:5001"
+    networks:
+      - app-net
+    volumes:
+      - api_data:/app/data  # api 서비스의 /app/data 디렉토리와 api_data 볼륨 연결
+
+networks:
+  app-net:
+    driver: bridge
+
+volumes:
+  web_data:  # web_data 볼륨 정의
+    driver: local
+
+  api_data:  # api_data 볼륨 정의
+    driver: local

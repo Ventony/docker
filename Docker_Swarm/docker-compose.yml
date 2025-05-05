@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "5000:5000"
+    depends_on:
+      - api
+    networks:
+      - app-net
+
+  api:
+    build: ./api
+    ports:
+      - "5001:5001"
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
